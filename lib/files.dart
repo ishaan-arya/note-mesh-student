@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
-
 import 'package:note_mesh/utils/constants.dart';
 
 class FileScreen extends StatefulWidget {

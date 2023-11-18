@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'files.dart';
 import 'login.dart';
 
 void main() {
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => LoginScreen(),
+        // '/files': (context) => FileScreen(),
       },
       initialRoute: '/',
     );

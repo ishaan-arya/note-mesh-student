@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Text(
                   "Note Mesh",
-                  style: TextStyle(fontFamily: "RobotoMono", fontSize: 32),
+                  style: kHeadingStyle,
                 ),
               ),
               SizedBox(
@@ -24,21 +24,7 @@ class LoginScreen extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
                 width: MediaQuery.of(context).size.width * 0.75,
-                decoration: BoxDecoration(
-                  color: Color(0xffD8FFB1),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade600,
-                      offset: const Offset(
-                        5.0,
-                        5.0,
-                      ),
-                      blurRadius: 3.0,
-                      spreadRadius: 0.5,
-                    ), //BoxShadow
-                  ],
-                ),
+                decoration: kGreenBoxDecoration,
                 child: Padding(
                   padding:
                       EdgeInsets.only(left: 35, top: 30, bottom: 15, right: 35),
@@ -46,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Username",
+                        "Email",
                         style: TextStyle(fontFamily: "RobotoMono"),
                       ),
                       SizedBox(
@@ -77,7 +63,18 @@ class LoginScreen extends StatelessWidget {
                         obscureText: true,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          "Don't have an account? Sign Up",
+                          style:
+                              TextStyle(fontFamily: "RobotoMono", fontSize: 12),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -92,10 +89,11 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Center(
-                              child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                          )),
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ],
