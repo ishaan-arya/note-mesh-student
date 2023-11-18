@@ -25,12 +25,16 @@ service_context = ServiceContext.from_defaults(
 
 from llama_index import VectorStoreIndex, SimpleDirectoryReader
 
-documents = SimpleDirectoryReader("concert").load_data()
+documents = SimpleDirectoryReader("docs").load_data()
 index = VectorStoreIndex.from_documents(
     documents, service_context=service_context
 )
 query_engine = index.as_query_engine()
-response = query_engine.query("Summarize the notes in detail.")
+query_message = '''Using the data provided, write detailed study notes. 
+Keep generating until you are finished summarizing the data.
+ Ensure you use all the information provided. 
+ Make sure your response looks like a student wrote it during class'''
+response = query_engine.query(query_message)
 with open('summarize.txt', 'w') as f:
     f.write(response.response)
 print(response.response)
