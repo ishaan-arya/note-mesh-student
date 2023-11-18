@@ -1,7 +1,7 @@
 # reading content from files
 import os
 
-directory_path = './concert' # will need to change
+directory_path = './docs' # will need to change
 documents = []
 filenames= []
 
@@ -47,14 +47,6 @@ for cluster_info in cluster_keywords:
     for keyword, tfidf_score in cluster_info['Keywords'][:10]:  # Display top 10 keywords per cluster
         print(f"{keyword}: {tfidf_score}")
 
-
-# Printing all the clustering assignments
-# print("Cluster Assignments: ", cluster_assignments)
-
-# for cluster_id in range(optimal_clusters):
-#     print(f"\nCluster {cluster_id + 1}:")
-#     cluster_filenames = [filenames[i] for i in range(len(documents)) if cluster_assignments[i] == cluster_id]
-#     print(" ".join(cluster_filenames))
 
 # Get the cluster with the most files under it
 from statistics import mode
