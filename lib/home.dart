@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:note_mesh/supernote.dart';
 import 'package:note_mesh/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -85,12 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListView.builder(
-                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                // scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: lectures.length,
                 itemBuilder: (context, index) {
-                  return _classCard(
-                      context, lectures[index].date, lectures[index].topic);
+                  return _classCard(context, lectures[index].date,
+                      lectures[index].topic, lectures[index].number);
                 },
               ),
             ],
@@ -101,9 +103,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget _classCard(BuildContext context, String date, String topic) {
+Widget _classCard(BuildContext context, String date, String topic, int num) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (context) => new SuperNoteScreen(num),
+        ),
+      );
+    },
     child: Padding(
       padding: EdgeInsets.all(20.0),
       child: Container(
