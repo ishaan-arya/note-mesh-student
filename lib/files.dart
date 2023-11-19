@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:note_mesh/utils/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart'; // Import Firebase Storage
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FileScreen extends StatefulWidget {
   const FileScreen({super.key});
@@ -119,11 +120,13 @@ Future<void> _uploadFile(File file) async {
     String nameOfClass = "ClassName";
     String lectureNumber = "Lecture1";
     String date = DateFormat('yyyyMMdd').format(DateTime.now());
-
+    User? user = FirebaseAuth.instance.currentUser;
+    
+    String userName = user?.displayName ?? 'UnknownUser';
     String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     String fileName = file.path.split('/').last;
     String filePath =
-        '$nameOfClass/$lectureNumber/student_notes/${date}_${timestamp}_$fileName';
+        '$nameOfClass/$lectureNumber/student_notes/${userName}_${date}_${timestamp}_$fileName';
     await FirebaseStorage.instance.ref(filePath).putFile(file);
   } catch (e) {
     print('Error uploading file: $e');
