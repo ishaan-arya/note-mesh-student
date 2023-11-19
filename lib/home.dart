@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:note_mesh/utils/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,13 +10,52 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+class Lecture {
+  int number;
+  String date;
+  String topic;
+  Lecture({required this.number, required this.date, required this.topic});
+}
+
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> class_list = ["EECS 281", "HISTART 392", "EECS 482"];
+  List<Lecture> lectures = [];
+
+  Future<List<Lecture>> fetchLecturesFromFirestore() async {
+    // Reference to the Firestore collection
+    CollectionReference lecturesCollection =
+        FirebaseFirestore.instance.collection('Lectures');
+
+    // Fetch the lecture documents
+    QuerySnapshot querySnapshot = await lecturesCollection.get();
+
+    // Convert each document to a Lecture object
+    List<Lecture> fetchedLectures = querySnapshot.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      return Lecture(
+        number: data['number'],
+        date: data['date'] ?? 'Unknown Date',
+        topic: data['topic'] ?? 'Unknown Topic',
+      );
+    }).toList();
+
+    return fetchedLectures;
+  }
 
   String getUser() {
     User? user = FirebaseAuth.instance.currentUser;
     String? userName = user?.displayName ?? 'UnknownUser';
     return userName;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLecturesFromFirestore().then((fetchedLectures) {
+      setState(() {
+        lectures = fetchedLectures;
+        print(lectures);
+      });
+    });
   }
 
   @override
@@ -37,12 +77,20 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.07,
               ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "My lectures",
+                  style: TextStyle(fontFamily: "RobotoMono"),
+                ),
+              ),
               ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: class_list.length,
+                itemCount: lectures.length,
                 itemBuilder: (context, index) {
-                  return _classCard(context, class_list[index]);
+                  return _classCard(
+                      context, lectures[index].date, lectures[index].topic);
                 },
               ),
             ],
@@ -53,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget _classCard(BuildContext context, String name) {
+Widget _classCard(BuildContext context, String date, String topic) {
   return GestureDetector(
     onTap: () {},
     child: Padding(
@@ -61,19 +109,34 @@ Widget _classCard(BuildContext context, String name) {
       child: Container(
         height: 100,
         width: 200,
-        color: kPrimaryGreen,
         decoration: BoxDecoration(
+          color: kPrimaryGreen,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
-          child: Text(
-            name,
-            style: TextStyle(
-              fontFamily: "RobotoMono",
-              fontSize: 24,
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Date: " + date,
+              style: TextStyle(
+                fontFamily: "RobotoMono",
+                fontSize: 18,
+              ),
             ),
-          ),
-        ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Topic: " + topic,
+              style: TextStyle(
+                fontFamily: "RobotoMono",
+                fontSize: 18,
+              ),
+            ),
+          ],
+        )),
       ),
     ),
   );
