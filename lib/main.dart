@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpScreen(),
         '/home': (context) => HomeScreen(),
         '/files': (context) => FileScreen(),
-        '/supernote': (context) => SuperNoteScreen(0),
+        '/supernote': (context) => SuperNoteScreen(1),
       },
       initialRoute: '/',
     );

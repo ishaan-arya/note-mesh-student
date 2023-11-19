@@ -119,14 +119,11 @@ Future<void> _uploadFile(File file) async {
   try {
     String nameOfClass = "ClassName";
     String lectureNumber = "Lecture1";
-    String date = DateFormat('yyyyMMdd').format(DateTime.now());
     User? user = FirebaseAuth.instance.currentUser;
     
     String userName = user?.displayName ?? 'UnknownUser';
-    String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-    String fileName = file.path.split('/').last;
     String filePath =
-        '$nameOfClass/$lectureNumber/student_notes/${userName}_${date}_${timestamp}_$fileName';
+        '$nameOfClass/$lectureNumber/student_notes/${userName}';
     await FirebaseStorage.instance.ref(filePath).putFile(file);
   } catch (e) {
     print('Error uploading file: $e');
