@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'files.dart';
 import 'login.dart';
+import 'sign-up.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => LoginScreen(),
+        '/signup': (context) => const SignUpScreen(),
+        '/files': (context) => const FileScreen(),
       },
-      initialRoute: '/',
+      initialRoute: '/signup',
     );
   }
 }
