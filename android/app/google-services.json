@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "183826575243",
+    "project_id": "note-mesh",
+    "storage_bucket": "note-mesh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183826575243:android:a0c6cf292458a69f22498e",
+        "android_client_info": {
+          "package_name": "com.example.note_mesh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKxEErH6wwQ5ZnvcMa_8QgEJy1A8ctV38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
