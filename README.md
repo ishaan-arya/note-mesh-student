@@ -1,3 +1,6 @@
+## GitHub Link to Note Mesh Professor Platform
+https://github.com/ishaan-arya/note-mesh-professor
+
 ## Inspiration
 Notemesh, driven by a vision for innovation, utilizes computer vision to distill handwritten notes into supernotes for students. It allows professors to provide insights into the most common topics, similarity scores, and prevalent words in students' notes. Note Mesh aspires to redefine the educational experience, bridging the gap between learners and educators through advanced technology and data-driven analytics.
 
