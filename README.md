@@ -1,5 +1,5 @@
 ## Inspiration
-Notemesh, driven by a vision for innovation, utilizes computer vision to distill handwritten notes into supernotes for students. It allows professors to provide insights into the most common topics, similarity scores, and prevalent words in students' notes. Notemesh aspires to redefine the educational experience, bridging the gap between learners and educators through advanced technology and data-driven analytics.
+Notemesh, driven by a vision for innovation, utilizes computer vision to distill handwritten notes into supernotes for students. It allows professors to provide insights into the most common topics, similarity scores, and prevalent words in students' notes. Note Mesh aspires to redefine the educational experience, bridging the gap between learners and educators through advanced technology and data-driven analytics.
 
 ## What it is
 Note Mesh is a comprehensive platform consisting of a mobile app and a web app. Students use the mobile app to upload their notes after a lecture (which could be in any format). These notes are processed through a llama 2 LLM which extracts the recurring themes across the notes, and prepares a comprehensive "supernote". This document can be invaluable to students for revision and also for students facing learning disabilities. Additionally, the professor of the class has a web application where new lectures can be created in addition to an interactive dashboard featuring plots and data that represent the topics from lecture that resonated most with students and how students reacted to the material presented. We believe this data could help professors gain important feedback and alter their teaching methods to better cater to students.
@@ -25,9 +25,9 @@ Deciding between local server hosting and Google Cloud and overcoming Flask CORS
 
 Reflecting on our journey, we take pride in embracing unfamiliar ML models and exploring Dart and Flutter. This experience not only expanded our skills but also proved one of our most rewarding endeavors. Notably, the seemingly straightforward task of transforming text to PDF revealed unexpected difficulties, reinforcing the challenges inherent in innovative projects.
 
-# Next for notemesh
+# Next for Note Mesh
 
-Our vision extends beyond development; we aim to elevate Notemesh to a production-level deployment, crafting a fully scalable solution. We hold a steadfast belief that Notemesh is poised to revolutionize learning for university students, providing a powerful tool for effective and enhanced education. Our commitment to scalability reflects our dedication to making a meaningful impact in the educational landscape, ensuring that Notemesh becomes a valuable resource for countless students on their learning journeys.
+Our vision extends beyond development; we aim to elevate Note Mesh to a production-level deployment, crafting a fully scalable solution. We hold a steadfast belief that Notemesh is poised to revolutionize learning for university students, providing a powerful tool for effective and enhanced education. Our commitment to scalability reflects our dedication to making a meaningful impact in the educational landscape, ensuring that Note Mesh becomes a valuable resource for countless students on their learning journeys.
 
 
 ### Machine Learning
