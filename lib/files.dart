@@ -13,6 +13,8 @@ class FileScreen extends StatefulWidget {
 }
 
 class _FileScreenState extends State<FileScreen> {
+  String _file_text = "Pick a File";
+  late File send_file;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,11 +41,34 @@ class _FileScreenState extends State<FileScreen> {
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Center(
                     child: Text(
-                      "Pick a File",
+                      _file_text,
                       style: TextStyle(fontFamily: "RobotoMono"),
                     ),
                   ),
                   decoration: kGreenBoxDecoration,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.13,
+            ),
+            GestureDetector(
+              onTap: () {
+                _uploadFile(send_file);
+              },
+              child: Container(
+                height: 70,
+                width: (MediaQuery.of(context).size.width * 0.3),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.upload_file,
+                    color: Colors.white,
+                    size: 27,
+                  ),
                 ),
               ),
             ),
@@ -52,11 +77,23 @@ class _FileScreenState extends State<FileScreen> {
       ),
     );
   }
+
+  void _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        _file_text = file.path;
+        send_file = file;
+      });
+    } else {}
+  }
 }
 
 Future<void> _uploadFile(File file) async {
   try {
-    String nameOfClass = "ClassName"; 
+    String nameOfClass = "ClassName";
     String lectureNumber = "Lecture1";
     String date = DateFormat('yyyyMMdd').format(DateTime.now());
 
@@ -67,15 +104,5 @@ Future<void> _uploadFile(File file) async {
     await FirebaseStorage.instance.ref(filePath).putFile(file);
   } catch (e) {
     print('Error uploading file: $e');
-  }
-}
-
-void _pickFile() async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-  if (result != null) {
-    File file = File(result.files.single.path!);
-    _uploadFile(file);
-  } else {
   }
 }
