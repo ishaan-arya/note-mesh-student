@@ -3,12 +3,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def calculate_similarity(file1_path, file2_path):
     # Read the content of the files
-    with open(file1_path, 'r', encoding='utf-8') as file:
+    with open(file1_path, 'r') as file:
         content1 = file.read()
 
-    with open(file2_path, 'r', encoding='utf-8') as file:
+    with open(file2_path, 'r') as file:
         content2 = file.read()
 
+    print("Read the two files")
     # Create a CountVectorizer
     vectorizer = CountVectorizer()
 
@@ -24,8 +25,9 @@ def calculate_similarity(file1_path, file2_path):
     return similarity
 
 # Example usage
-file1_path = 'docs/prince.txt'
-file2_path = 'docs/prince1.txt'
+if __name__ == "__main__":
+    file1_path = 'docs/prince.txt'
+    file2_path = 'docs/prince1.txt'
 
-similarity = calculate_similarity(file1_path, file2_path)
-print(f"Cosine Similarity between the files: {similarity}")
+    similarity = calculate_similarity(file1_path, file2_path)
+    print(f"Cosine Similarity between the files: {similarity}")
