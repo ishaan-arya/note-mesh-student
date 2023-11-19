@@ -36,6 +36,27 @@ def list_files(prefix, local_folder):
                 os.makedirs(local_folder)  # Create the directory if it does not exist
             download_blob(blob.name, local_file_path)
 
+def average_file_length(folder_path):
+    total_words = 0
+    file_count = 0
+
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".txt"):
+            file_path = os.path.join(folder_path, filename)
+            
+            with open(file_path, 'r', encoding='utf-8') as file:
+                content = file.read()
+                # Count the number of words (assuming words are separated by whitespace)
+                words = content.split()
+                total_words += len(words)
+                file_count += 1
+
+    if file_count == 0:
+        return 0  # Avoid division by zero
+
+    average_words = total_words / file_count
+    return average_words
+
 # $nameOfClass/$lectureNumber/supernote/filename
 # Firebase upload 
 def upload_file(destination_path, local_path):
@@ -86,25 +107,41 @@ def run_clustering_keywords():
     data = request.json
     generate_all_txtfiles(data["path"])
     file_paths  = './docs'
+    final_res = {}
     res = relevant_clustering(file_paths) # returns a dictionary
+    final_res["keywords"] = res
+    final_res["average"] = average_file_length("./docs")
     json_path = './output/cluster.json'
     with open(json_path, 'w') as json_file:
-        json.dump(res, json_file)
+        json.dump(final_res, json_file)
 
     split_path_list = data["path"].split('/')
     db_output_path = split_path_list[0] + '/' + split_path_list[1] + '/clustering/cluster.json'
     upload_file(db_output_path, './output/cluster.json')
     # remove_temp_files()
-    return jsonify(res)
+    return jsonify(final_res)
 
 # TODO: change the hardcoded user_file
 @app.route("/similarity", methods=['POST'])
 def calc_similarity_score():
     try: 
         data = request.json
-        generate_all_txtfiles(data["path"])
-        user_file, super_note = "./docs/notes1.pdf.txt", "./output/output.txt" # output.txt is the supernote
+        if not os.path.exists("./docs"):
+            os.mkdir("./docs")
+        remote_path = data["path"]
+        print("Remote Path:", remote_path)
+        remote_split = data["path"].split('/')
+        print(remote_split)
+        download_blob(remote_path, "./docs/student.pdf")
+        print("Downloaded student.pdf")
+        pdf_to_text("./docs/student.pdf", "./docs/student.txt")
+
+        remote_path_super = remote_split[0] + '/' + remote_split[1] + '/supernote/supernote.pdf'
+        download_blob(remote_path_super, "./docs/supernote.pdf")
+        pdf_to_text("./docs/supernote.pdf", "./docs/supernote.txt")
+        user_file, super_note = "./docs/student.txt", "./docs/supernote.txt" # output.txt is the supernote
         percent = calc_sim(user_file, super_note)
+        # print(percent)
         percent *= 100
         return str(round(percent)) + "%", 200
     except:
@@ -119,4 +156,4 @@ def remove_temp_files():
     
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
