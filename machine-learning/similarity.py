@@ -24,8 +24,9 @@ def calculate_similarity(file1_path, file2_path):
     return similarity
 
 # Example usage
-file1_path = 'docs/prince.txt'
-file2_path = 'docs/prince1.txt'
+if __name__ == "__main__":
+    file1_path = 'docs/prince.txt'
+    file2_path = 'docs/prince1.txt'
 
-similarity = calculate_similarity(file1_path, file2_path)
-print(f"Cosine Similarity between the files: {similarity}")
+    similarity = calculate_similarity(file1_path, file2_path)
+    print(f"Cosine Similarity between the files: {similarity}")
