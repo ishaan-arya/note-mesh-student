@@ -29,7 +29,7 @@ class _FileScreenState extends State<FileScreen> {
               height: MediaQuery.of(context).size.width * 0.2,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: GestureDetector(
                 onTap: _pickFile,
                 child: Container(

@@ -116,7 +116,9 @@ class SignUpScreen extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, '/');
+                          },
                           child: Text(
                             "Already have an account? Log in",
                             style: TextStyle(
