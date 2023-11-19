@@ -51,7 +51,7 @@ def run_llama_supernotes():
         path = data.path
         list_files(bucket_name, path, "student_notes/")
 
-        for each in list_of_pdfs:
+        for each in os.listdir('./student_notes'):
             filepath = './docs/' + os.path.splitext(each)[0] + '.txt'
             pdf_to_text(each, filepath)
 
