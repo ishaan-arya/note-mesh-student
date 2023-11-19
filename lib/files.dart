@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:note_mesh/home.dart';
 import 'dart:io';
 import 'package:note_mesh/utils/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart'; // Import Firebase Storage
@@ -14,7 +15,25 @@ class FileScreen extends StatefulWidget {
 }
 
 class _FileScreenState extends State<FileScreen> {
+  Future<void> _uploadFile(File file) async {
+    try {
+      String nameOfClass = "ClassName";
+      String lectureNumber = "Lecture1";
+      User? user = FirebaseAuth.instance.currentUser;
+
+      String userName = user?.displayName ?? 'UnknownUser';
+      String filePath = '$nameOfClass/$lectureNumber/student_notes/${userName}';
+      await FirebaseStorage.instance.ref(filePath).putFile(file);
+      setState(() {
+        fileSent = true;
+      });
+    } catch (e) {
+      print('Error uploading file: $e');
+    }
+  }
+
   String _file_text = "Pick a File";
+  bool fileSent = false;
   late File send_file;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +48,11 @@ class _FileScreenState extends State<FileScreen> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                );
               },
               child: Padding(
                 padding: EdgeInsets.only(left: 10),
@@ -87,11 +110,17 @@ class _FileScreenState extends State<FileScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
-                    child: Icon(
-                      Icons.upload_file,
-                      color: Colors.white,
-                      size: 27,
-                    ),
+                    child: fileSent
+                        ? Icon(
+                            Icons.done,
+                            color: Colors.white,
+                            size: 27,
+                          )
+                        : Icon(
+                            Icons.upload_file,
+                            color: Colors.white,
+                            size: 27,
+                          ),
                   ),
                 ),
               ),
@@ -112,20 +141,5 @@ class _FileScreenState extends State<FileScreen> {
         send_file = file;
       });
     } else {}
-  }
-}
-
-Future<void> _uploadFile(File file) async {
-  try {
-    String nameOfClass = "ClassName";
-    String lectureNumber = "Lecture1";
-    User? user = FirebaseAuth.instance.currentUser;
-    
-    String userName = user?.displayName ?? 'UnknownUser';
-    String filePath =
-        '$nameOfClass/$lectureNumber/student_notes/${userName}';
-    await FirebaseStorage.instance.ref(filePath).putFile(file);
-  } catch (e) {
-    print('Error uploading file: $e');
   }
 }

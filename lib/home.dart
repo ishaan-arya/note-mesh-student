@@ -81,8 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
-                  "My lectures",
-                  style: TextStyle(fontFamily: "RobotoMono"),
+                  "All Lectures",
+                  style: TextStyle(
+                    fontFamily: "RobotoMono",
+                    fontSize: 20,
+                  ),
                 ),
               ),
               ListView.builder(

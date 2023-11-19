@@ -169,7 +169,7 @@ class SignUpScreen extends StatelessWidget {
                             filled: true,
                             fillColor: Colors.white,
                           ),
-                          keyboardType: TextInputType.name,
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
