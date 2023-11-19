@@ -3,30 +3,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'utils/constants.dart'; // Ensure this file contains kTextFieldDecoration, kHeadingStyle, and kGreenBoxDecoration.
 import 'dart:developer';
 
-
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void showErrorDialog(BuildContext context, String message) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Error'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop(); // Dismiss the dialog
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<void> signInWithEmailAndPassword(BuildContext context) async {
     String email = _emailController.text.trim();
@@ -37,11 +36,12 @@ class LoginScreen extends StatelessWidget {
       return;
     }
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Navigator.of(context).pushReplacementNamed('/files'); 
+      Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'An error occurred. Please try again later.';
       if (e.code == 'user-not-found') {
@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -134,7 +134,6 @@ class LoginScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                
                             signInWithEmailAndPassword(context);
                           },
                           child: Container(

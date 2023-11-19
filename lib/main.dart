@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_mesh/home.dart';
 import 'files.dart';
 import 'login.dart';
 import 'sign-up.dart';
@@ -25,9 +26,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         '/signup': (context) => SignUpScreen(),
+        '/home': (context) => HomeScreen(),
         '/files': (context) => FileScreen(),
       },
-      initialRoute: '/files',
+      initialRoute: '/',
     );
   }
 }

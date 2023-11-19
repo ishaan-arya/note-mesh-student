@@ -38,12 +38,6 @@ class SignUpScreen extends StatelessWidget {
       );
     }
 
-    print(name);
-    print(major);
-    print(email);
-    print(password);
-    print(year);
-
     if (name.isEmpty ||
         major.isEmpty ||
         email.isEmpty ||
@@ -70,10 +64,7 @@ class SignUpScreen extends StatelessWidget {
         'major': major,
         'year': year,
       });
-
-      // Navigate to home page or show success message
-      Navigator.of(context)
-          .pushReplacementNamed('/files'); // Adjust the route as needed
+      Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (e) {
       // Handle Firebase Auth errors here
       print('Firebase Auth Error: ${e.message}');
