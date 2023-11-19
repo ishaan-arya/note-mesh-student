@@ -158,3 +158,6 @@ cython_debug/
 # Input files
 docs/
 summarize.txt
+output/
+test_files/
+key.json

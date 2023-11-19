@@ -57,7 +57,7 @@ def relevant_clustering(directory_path):
         most_common_filenames = [filenames[i] for i in range(len(documents)) if cluster_assignments[i] == most_common_clusterid]
         print(" ".join(most_common_filenames))
     
-    for keyword, tfidf_score in cluster_keywords[most_common_clusterid]['Keywords'][:15]:
+    for keyword, tfidf_score in cluster_keywords[most_common_clusterid]['Keywords'][:20]:
         res[keyword] = tfidf_score
     return res
     
