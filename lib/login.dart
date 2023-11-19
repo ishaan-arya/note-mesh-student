@@ -1,9 +1,60 @@
 import 'package:flutter/material.dart';
-import 'utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'utils/constants.dart'; // Ensure this file contains kTextFieldDecoration, kHeadingStyle, and kGreenBoxDecoration.
+import 'dart:developer';
+
 
 class LoginScreen extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void showErrorDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Error'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop(); // Dismiss the dialog
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+  Future<void> signInWithEmailAndPassword(BuildContext context) async {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+    inspect(email);
+    if (email.isEmpty || password.isEmpty) {
+      showErrorDialog(context, "Error: Please enter an email and password.");
+      return;
+    }
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      Navigator.of(context).pushReplacementNamed('/files'); 
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'An error occurred. Please try again later.';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Wrong password provided for that user.';
+      }
+      showErrorDialog(context, errorMessage);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -40,6 +91,7 @@ class LoginScreen extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         TextField(
+                          controller: _emailController,
                           decoration: kTextFieldDecoration.copyWith(
                             filled: true,
                             fillColor: Colors.white,
@@ -57,6 +109,7 @@ class LoginScreen extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         TextField(
+                          controller: _passwordController,
                           decoration: kTextFieldDecoration.copyWith(
                             filled: true,
                             fillColor: Colors.white,
@@ -81,7 +134,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            //TODO: Navigate to the Home Page
+                
+                            signInWithEmailAndPassword(context);
                           },
                           child: Container(
                             height: 40,
