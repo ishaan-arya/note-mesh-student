@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:note_mesh/files.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class SuperNoteScreen extends StatefulWidget {
-  int number = 1;
+  int number = 0;
 
   SuperNoteScreen(int num) {
     number = num;
@@ -21,7 +20,7 @@ class _SuperNoteScreenState extends State<SuperNoteScreen> {
   late Future<File?> _pdfFile;
   Future<File?> downloadPDF(int number) async {
     final storageRef = FirebaseStorage.instance.ref();
-    final supernoteDirRef = storageRef.child('Lecture$number/supernote');
+    final supernoteDirRef = storageRef.child('ClassName/Lecture$number/supernote');
 
     try {
       // List all items (files) inside 'supernote' directory
@@ -39,6 +38,7 @@ class _SuperNoteScreenState extends State<SuperNoteScreen> {
         await fileRef.writeToFile(file);
         return file;
       } else {
+        print('No files found in the directory.');
         return null;
       }
     } catch (e) {
@@ -62,20 +62,12 @@ class _SuperNoteScreenState extends State<SuperNoteScreen> {
           future: _pdfFile,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData && snapshot.data != null) {
+              if (snapshot.data != null) {
                 return PDFView(
                   filePath: snapshot.data!.path,
                 );
               } else {
-                // Navigate to /files if no file is found
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const FileScreen(),
-                    ),
-                  );
-                });
-                return SizedBox(); // Return an empty widget while the navigation completes
+                return Text('Failed to download the file.');
               }
             } else {
               return Center(child: CircularProgressIndicator());
