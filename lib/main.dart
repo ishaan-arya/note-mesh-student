@@ -13,7 +13,6 @@ void main() async {
   );
   await FirebaseAppCheck.instance.activate();
 
-
   runApp(MyApp());
 }
 
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpScreen(),
         '/files': (context) => FileScreen(),
       },
-      initialRoute: '/',
+      initialRoute: '/files',
     );
   }
 }

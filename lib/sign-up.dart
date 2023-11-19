@@ -3,7 +3,7 @@ import 'utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // For Firestore
 
-const List<String> list = <String>['Freshman', 'Sophmore', 'Junior', 'Senior'];
+const List<String> list = <String>['Freshman', 'Sophomore', 'Junior', 'Senior'];
 
 class SignUpScreen extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
@@ -11,7 +11,6 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<_DropdownMenuExampleState> _dropdownKey = GlobalKey();
-
 
   Future<void> _registerUser(BuildContext context) async {
     final String name = _nameController.text.trim();
@@ -38,33 +37,43 @@ class SignUpScreen extends StatelessWidget {
         },
       );
     }
+
     print(name);
     print(major);
     print(email);
     print(password);
     print(year);
 
-    if (name.isEmpty || major.isEmpty || email.isEmpty || password.isEmpty || year.isEmpty) {
+    if (name.isEmpty ||
+        major.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        year.isEmpty) {
       showErrorDialog(context, "Error: Please fill out all fields.");
       return;
     }
 
     try {
       // Create user in Firebase Auth
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       // Store additional information in Firestore
-      FirebaseFirestore.instance.collection('Students').doc(userCredential.user?.uid).set({
+      FirebaseFirestore.instance
+          .collection('Students')
+          .doc(userCredential.user?.uid)
+          .set({
         'name': name,
         'major': major,
         'year': year,
       });
 
       // Navigate to home page or show success message
-      Navigator.of(context).pushReplacementNamed('/files'); // Adjust the route as needed
+      Navigator.of(context)
+          .pushReplacementNamed('/files'); // Adjust the route as needed
     } on FirebaseAuthException catch (e) {
       // Handle Firebase Auth errors here
       print('Firebase Auth Error: ${e.message}');
@@ -126,7 +135,8 @@ class SignUpScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01,
                         ),
-                        DropdownMenuExample(key: _dropdownKey, initialValue: list.first),
+                        DropdownMenuExample(
+                            key: _dropdownKey, initialValue: list.first),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
@@ -234,7 +244,8 @@ class SignUpScreen extends StatelessWidget {
 class DropdownMenuExample extends StatefulWidget {
   final String initialValue;
 
-  const DropdownMenuExample({Key? key, required this.initialValue}) : super(key: key);
+  const DropdownMenuExample({Key? key, required this.initialValue})
+      : super(key: key);
 
   @override
   State<DropdownMenuExample> createState() => _DropdownMenuExampleState();

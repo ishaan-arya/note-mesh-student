@@ -20,9 +20,28 @@ class _FileScreenState extends State<FileScreen> {
     return MaterialApp(
       home: Scaffold(
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.2,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                  size: 35,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.4,
+            ),
             Center(
               child: Text(
                 "Upload your Notes!",
@@ -32,42 +51,46 @@ class _FileScreenState extends State<FileScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.width * 0.2,
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: GestureDetector(
-                onTap: _pickFile,
-                child: Container(
-                  height: MediaQuery.of(context).size.width * 0.15,
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: Center(
-                    child: Text(
-                      _file_text,
-                      style: TextStyle(fontFamily: "RobotoMono"),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: GestureDetector(
+                  onTap: _pickFile,
+                  child: Container(
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    child: Center(
+                      child: Text(
+                        _file_text,
+                        style: TextStyle(fontFamily: "RobotoMono"),
+                      ),
                     ),
+                    decoration: kGreenBoxDecoration,
                   ),
-                  decoration: kGreenBoxDecoration,
                 ),
               ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.13,
             ),
-            GestureDetector(
-              onTap: () {
-                _uploadFile(send_file);
-              },
-              child: Container(
-                height: 70,
-                width: (MediaQuery.of(context).size.width * 0.3),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.upload_file,
-                    color: Colors.white,
-                    size: 27,
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  _uploadFile(send_file);
+                },
+                child: Container(
+                  height: 70,
+                  width: (MediaQuery.of(context).size.width * 0.3),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.upload_file,
+                      color: Colors.white,
+                      size: 27,
+                    ),
                   ),
                 ),
               ),
