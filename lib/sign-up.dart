@@ -54,6 +54,12 @@ class SignUpScreen extends StatelessWidget {
         email: email,
         password: password,
       );
+      User? user = userCredential.user;
+      if (user != null) {
+        await user.updateProfile(displayName: name);
+        await user.reload(); // Reload the user data
+        print("User created with display name: ${user.displayName}");
+      }
 
       // Store additional information in Firestore
       FirebaseFirestore.instance
@@ -228,7 +234,6 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
 
