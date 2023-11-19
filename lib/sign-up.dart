@@ -69,6 +69,7 @@ class SignUpScreen extends StatelessWidget {
         'name': name,
         'major': major,
         'year': year,
+        'email': email,
       });
       Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (e) {
