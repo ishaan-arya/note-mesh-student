@@ -8,7 +8,8 @@ from llama_index import VectorStoreIndex, SimpleDirectoryReader
 query_message = '''Using the data provided, write detailed study notes. 
     Keep generating until you are finished summarizing the data.
     Ensure you use all the information provided. 
-    Make sure your response looks like a student wrote it during class'''
+    Make sure your response looks like a student wrote it during class. Limit each line in the response to 100 characters. 
+    Do not include personal details of the author.'''
 llama2_7b_chat = "meta/llama-2-7b-chat:8e6975e5ed6174911a6ff3d60540dfd4844201974602551e10e9e87ab143d81e"
 
 def llama_supernotes(folderpath):
