@@ -77,10 +77,10 @@ def run_clustering_keywords():
 @app.route("/similarity", methods=['POST'])
 def calc_similarity_score():
     data = request.json
-    user_file, super_note = "", ""
+    user_file, super_note = "./docs/The_Prince.txt", "./docs/notes2.txt"
     percent = calc_sim(user_file, super_note)
     percent *= 100
-    return round(percent)
+    return str(round(percent)) + "%"
 
 def remove_temp_files():
     shutil.rmtree('./docs')
