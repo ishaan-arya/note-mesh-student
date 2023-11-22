@@ -101,7 +101,9 @@ def run_llama_supernotes():
     upload_file(db_output_path, './output/supernote.pdf')
     # remove_temp_files()
     return "200"
-
+@app.route("/test", methods=['GET'])
+def test():
+    return "hi"
 @app.route("/clustering", methods=['POST'])
 def run_clustering_keywords():
     data = request.json
@@ -153,7 +155,7 @@ def remove_temp_files():
     for dir in dirs:
         if os.path.exists(dir):
             shutil.rmtree(dir)
-    
+        
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)

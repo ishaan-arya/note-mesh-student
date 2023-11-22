@@ -1,0 +1,7 @@
+runtime: python310
+entrypoint: gunicorn -b :$PORT main:app
+
+handlers:
+- url: /.*
+  script: auto
+  secure: always  # Optional: Redirects HTTP to HTTPS
